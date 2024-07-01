@@ -1,24 +1,24 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import logo from "./logo.svg";
+import "./App.css";
+import Navbar from "./components/navbar/Navbar";
+import Footer from "./components/footer/Footer";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+      {/* <Navbar /> */}
+      <div className="bg-gray-200 h-screen pt-12">
+        <div className="p-8">Welcome to Riyamatrimony.com</div>
+        <p className="text-green-900 font-bold pb-8">work in progress...</p>
         <p>
-          Edit <code>src/App.tsx</code> and save to reload.
+          if any queries? please contact developer{" "}
+          <span className="text-red-900 font-bold">
+            @santhosh.m0719@gmail.com | 7093946332
+          </span>
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      </div>
+      {/* <Footer /> */}
     </div>
   );
 }
