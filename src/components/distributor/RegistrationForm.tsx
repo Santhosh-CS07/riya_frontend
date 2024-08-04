@@ -10,6 +10,7 @@ const RegistrationForm: React.FC = () => {
   const [termsOpen, setTermsOpen] = useState(false);
   const [formData, setFormData] = useState({
     fullName: "",
+    companyName: "",
     email: "",
     mobileNumber: "",
     password: "",
@@ -19,6 +20,7 @@ const RegistrationForm: React.FC = () => {
   });
   const [errors, setErrors] = useState({
     fullName: "",
+    companyName: "",
     email: "",
     mobileNumber: "",
     password: "",
@@ -107,6 +109,7 @@ const RegistrationForm: React.FC = () => {
       }
 
       try {
+        setSuccessModalOpen(true);
         // Send form data to the server
         await registerDistributor(formData_);
         // Simulate form submission and generate a Distributor ID
@@ -150,11 +153,31 @@ const RegistrationForm: React.FC = () => {
               type="text"
               id="fullName"
               name="fullName"
-              className={`mt-1 block w-full px-3 py-2 border ${
-                errors.fullName ? "border-red-500" : "border-gray-300"
-              } rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm`}
+              className={`mt-1 block w-full px-3 py-2 border ${errors.fullName ? "border-red-500" : "border-gray-300"
+                } rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm`}
               placeholder="Enter your full name"
               value={formData.fullName}
+              onChange={handleChange}
+            />
+            {errors.fullName && (
+              <p className="text-red-500 text-xs mt-1">{errors.fullName}</p>
+            )}
+          </div>
+          <div className="mb-4">
+            <label
+              htmlFor="fullName"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Company Name/Society Name <span className="text-red-500">*</span>
+            </label>
+            <input
+              type="text"
+              id="CompanyName"
+              name="CompanyName"
+              className={`mt-1 block w-full px-3 py-2 border ${errors.companyName ? "border-red-500" : "border-gray-300"
+                } rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm`}
+              placeholder="Enter your Company name"
+              value={formData.companyName}
               onChange={handleChange}
             />
             {errors.fullName && (
@@ -172,9 +195,8 @@ const RegistrationForm: React.FC = () => {
               type="email"
               id="email"
               name="email"
-              className={`mt-1 block w-full px-3 py-2 border ${
-                errors.email ? "border-red-500" : "border-gray-300"
-              } rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm`}
+              className={`mt-1 block w-full px-3 py-2 border ${errors.email ? "border-red-500" : "border-gray-300"
+                } rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm`}
               placeholder="Enter your email"
               value={formData.email}
               onChange={handleChange}
@@ -194,9 +216,8 @@ const RegistrationForm: React.FC = () => {
               type="tel"
               id="mobileNumber"
               name="mobileNumber"
-              className={`mt-1 block w-full px-3 py-2 border ${
-                errors.mobileNumber ? "border-red-500" : "border-gray-300"
-              } rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm`}
+              className={`mt-1 block w-full px-3 py-2 border ${errors.mobileNumber ? "border-red-500" : "border-gray-300"
+                } rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm`}
               placeholder="Enter your mobile number"
               value={formData.mobileNumber}
               onChange={handleChange}
@@ -216,9 +237,8 @@ const RegistrationForm: React.FC = () => {
               type="password"
               id="password"
               name="password"
-              className={`mt-1 block w-full px-3 py-2 border ${
-                errors.password ? "border-red-500" : "border-gray-300"
-              } rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm`}
+              className={`mt-1 block w-full px-3 py-2 border ${errors.password ? "border-red-500" : "border-gray-300"
+                } rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm`}
               placeholder="Enter your password"
               value={formData.password}
               onChange={handleChange}
@@ -237,9 +257,8 @@ const RegistrationForm: React.FC = () => {
             <textarea
               id="address"
               name="address"
-              className={`mt-1 h-40 block w-full px-3 py-2 border ${
-                errors.address ? "border-red-500" : "border-gray-300"
-              } rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm`}
+              className={`mt-1 h-40 block w-full px-3 py-2 border ${errors.address ? "border-red-500" : "border-gray-300"
+                } rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm`}
               placeholder="Enter your address"
               value={formData.address}
               onChange={handleChange}
@@ -259,11 +278,10 @@ const RegistrationForm: React.FC = () => {
               type="file"
               id="fileUpload"
               name="fileUpload"
-              className={`mt-1 block w-full text-sm text-gray-500 file:py-2 file:px-4 file:border ${
-                errors.fileUpload
-                  ? "file:border-red-500"
-                  : "file:border-gray-300"
-              } file:rounded-md file:text-sm file:font-semibold file:bg-gray-100 hover:file:bg-gray-200`}
+              className={`mt-1 block w-full text-sm text-gray-500 file:py-2 file:px-4 file:border ${errors.fileUpload
+                ? "file:border-red-500"
+                : "file:border-gray-300"
+                } file:rounded-md file:text-sm file:font-semibold file:bg-gray-100 hover:file:bg-gray-200`}
               onChange={handleChange}
             />
             {errors.fileUpload && (
@@ -276,9 +294,8 @@ const RegistrationForm: React.FC = () => {
                 type="checkbox"
                 id="terms"
                 name="terms"
-                className={`mr-2 h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500 ${
-                  errors.terms ? "border-red-500" : ""
-                }`}
+                className={`mr-2 h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500 ${errors.terms ? "border-red-500" : ""
+                  }`}
                 checked={formData.terms}
                 onChange={handleChange}
               />

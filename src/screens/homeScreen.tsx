@@ -19,7 +19,8 @@ const HomePage: React.FC = () => {
   return (
     <>
       {/* Navbar component */}
-      <Navbar />
+      <Navbar title="Riya Matrymony" tab1="Home" tab2="Login" tab3="Register" />
+
 
       {/* Main content area */}
       <div className="flex flex-col  justify-between text-center my-8 px-8">
