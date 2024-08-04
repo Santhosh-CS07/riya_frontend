@@ -9,7 +9,7 @@ import {
 import { Navigate, useNavigate } from "react-router-dom";
 
 const Navbar = (props: any) => {
-  const { title, tab1, tab2, tab3 } = props;
+  const { title, tab1, tab2, tab3, screenType } = props;
   const [isOpen, setIsOpen] = useState(false);
   const navigate: any = useNavigate();
 
@@ -30,7 +30,11 @@ const Navbar = (props: any) => {
         >
           <li
             onClick={() => {
-              navigate("/");
+              if (screenType === 'DISTRIBUTOR') {
+                navigate("/distributorDashboard");
+              } else {
+                navigate("/");
+              }
             }}
             className="flex items-center my-2 md:my-0 cursor-pointer	"
           >
