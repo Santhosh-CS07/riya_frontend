@@ -69,7 +69,7 @@ const LoginPage = () => {
 
   return (
     <>
-      <Navbar title="Riya Matrymony" tab1="Home" tab2="Login" tab3="Register" />
+      <Navbar />
       <div className="flex items-center justify-center py-24 bg-gray-100">
         <form
           onSubmit={handleSubmit}
@@ -83,8 +83,9 @@ const LoginPage = () => {
               type="text"
               id="distributorId"
               name="distributorId"
-              className={`mt-1 block w-full px-3 py-2 border ${errors.distributorId ? "border-red-500" : "border-gray-300"
-                } rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm`}
+              className={`mt-1 block w-full px-3 py-2 border ${
+                errors.distributorId ? "border-red-500" : "border-gray-300"
+              } rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm`}
               placeholder="Distributor Id"
               value={formData.distributorId}
               onChange={handleChange}
@@ -100,8 +101,9 @@ const LoginPage = () => {
               type="password"
               id="password"
               name="password"
-              className={`mt-1 block w-full px-3 py-2 border ${errors.password ? "border-red-500" : "border-gray-300"
-                } rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm`}
+              className={`mt-1 block w-full px-3 py-2 border ${
+                errors.password ? "border-red-500" : "border-gray-300"
+              } rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm`}
               placeholder="Password"
               value={formData.password}
               onChange={handleChange}

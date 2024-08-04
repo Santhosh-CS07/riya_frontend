@@ -8,7 +8,6 @@ export interface DistributorRegisterPayload {
   email: string;
   password: string;
   fullName: string;
-  companyName: string;
   mobileNumber: string;
   address: string;
   filePath: string;

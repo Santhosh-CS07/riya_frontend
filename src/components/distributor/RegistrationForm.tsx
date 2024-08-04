@@ -93,25 +93,15 @@ const RegistrationForm: React.FC = () => {
     return isValid;
   };
 
-  const generateDistributorId = (): string => {
-    const randomNumbers = Math.floor(100000 + Math.random() * 900000); // Generates a 6-digit number
-    return `D${randomNumbers}`;
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const id: any = generateDistributorId();
-
     // Create a FormData object to handle file uploads
     const formData_: any = new FormData();
-
     formData_.append("email", formData.email);
     formData_.append("password", formData.password);
     formData_.append("fullName", formData.fullName);
-    formData_.append("companyName", formData.companyName);
     formData_.append("mobileNumber", formData.mobileNumber);
-    formData_.append("location", formData.address);
-    formData_.append("distributorId", id);
+    formData_.append("address", formData.address);
 
     // Append file if it exists
     if (formData.fileUpload) {
@@ -121,7 +111,10 @@ const RegistrationForm: React.FC = () => {
     try {
       // Send form data to the server
       await registerDistributor(formData_);
-      setDistributorId(id);
+      setSuccessModalOpen(true);
+      // Simulate form submission and generate a Distributor ID
+      const generatedDistributorId = "DIS123456"; // Example ID, replace with actual logic
+      setDistributorId(generatedDistributorId);
       setSuccessModalOpen(true);
     } catch (error) {
       console.error("Error registering distributor:", error);
@@ -145,7 +138,7 @@ const RegistrationForm: React.FC = () => {
 
   return (
     <>
-      <Navbar title="Riya Matrymony" tab1="Home" tab2="Login" tab3="Register" />
+      <Navbar />
       <div>
         {uploadImages ? <>
           <ImageUploadComponent />
@@ -346,6 +339,12 @@ const RegistrationForm: React.FC = () => {
               >
                 Next
               </button>
+              {/* <button
+              type="submit"
+              className="w-full px-4 py-2 bg-indigo-600 text-white font-semibold rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            >
+              Submit
+            </button> */}
               <div className="text-center mt-4 text-blue-500">
                 <a href="/login">Already have an account | Login</a>
               </div>

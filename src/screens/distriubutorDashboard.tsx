@@ -15,8 +15,8 @@ const DistriubutorDashboard: React.FC = () => {
 
   return (
     <>
-      <Navbar title="Distributor Company Name" tab1="Home" tab2="logout" tab3="profile" screenType="DISTRIBUTOR" />
-      <div className="mt-8 flex flex-col items-center justify-center">
+      <Navbar title="Distributor Company Name" tab1="Home" tab2="12345" tab3="Profile" />
+      <div className="min-h-screen flex flex-col items-center justify-center">
         <div className="flex space-x-4 mb-8">
           <button
             onClick={handleShareAccountClick}
