@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Navbar from '../navbar/Navbar';
 import Footer from '../footer/Footer';
+import BannerUpload from './BannerUpload';
 
 const BureauAccountForm: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -44,8 +45,8 @@ const BureauAccountForm: React.FC = () => {
   return (
     <>
     <Navbar title="Distributor Company Name" tab1="Home" tab2="12345" tab3="Profile"/>
-    <div className="flex items-center justify-center min-h-screen bg-gray-100 py-6">
-      <form onSubmit={handleSubmit} className="bg-white p-6 sm:p-8 rounded shadow-md w-full max-w-xs sm:max-w-md">
+    <div className="flex items-center justify-center min-h-screen bg-gray-200 opacity-75 py-6">
+      <form onSubmit={handleSubmit} className="bg-white p-6 sm:p-8 rounded shadow-lg w-full max-w-xs sm:max-w-md">
         <h1 className="text-xl sm:text-2xl font-bold mb-6 text-center">Bureau Account Registration</h1>
         <div className="mb-4">
           <label htmlFor="bureauName" className="block text-sm font-medium text-gray-700">Bureau Name</label>
@@ -87,7 +88,7 @@ const BureauAccountForm: React.FC = () => {
           />
         </div>
         <div className="mb-4">
-          <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
+          <label htmlFor="email" className="block text-sm font-medium text-gray-700 ">Email</label>
           <input
             type="email"
             id="email"
@@ -162,8 +163,12 @@ const BureauAccountForm: React.FC = () => {
 
 const NextComponent: React.FC = () => {
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <h1 className="text-2xl font-bold">Next Component Content Here</h1>
+    <div>
+        {/* className="flex items-center justify-center min-h-screen bg-gray-100" */}
+      {/* <h1 className="text-2xl font-bold">Next Component Content Here</h1> */}
+      <Navbar  title="Distributor Company Name" tab1="Home" tab2="12345" tab3="Profile"/>
+      <BannerUpload />
+      <Footer />
     </div>
   );
 }

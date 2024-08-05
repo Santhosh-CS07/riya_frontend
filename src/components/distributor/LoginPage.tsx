@@ -70,10 +70,10 @@ const LoginPage = () => {
   return (
     <>
       <Navbar />
-      <div className="flex items-center justify-center py-24 bg-gray-100">
+      <div className="flex items-center justify-center py-24 bg-gray-200 opacity-75">
         <form
           onSubmit={handleSubmit}
-          className="bg-white p-6 sm:p-8 rounded shadow-md w-full max-w-xs sm:max-w-md"
+          className="bg-white p-6 sm:p-8 rounded shadow-lg w-full max-w-xs sm:max-w-md"
         >
           <h1 className="text-xl sm:text-2xl font-bold mb-6 text-center">
             Login
