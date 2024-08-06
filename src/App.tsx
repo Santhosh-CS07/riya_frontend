@@ -5,7 +5,9 @@ import HomePage from "./screens/homeScreen";
 import RegistrationForm from "./components/distributor/RegistrationForm";
 import DistriubutorDashboard from "./screens/distriubutorDashboard";
 import BureauAccountForm from "./components/distributor/BureauAccountForm";
+import ImageSlider from "./components/distributor/ImageSlider";
 function App() {
+ 
   return (
     <>
       <BrowserRouter>
@@ -17,6 +19,7 @@ function App() {
           <Route path="/distributorDashboard/create-marriage-bureau-account" element={<BureauAccountForm />} />
         </Routes>
       </BrowserRouter>
+      
     </>
   );
 }
