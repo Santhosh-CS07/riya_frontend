@@ -13,6 +13,22 @@ export interface DistributorRegisterPayload {
   filePath: string;
 }
 
+export interface BureauAccountRegisterPayload {
+  email: string;
+  password: string;
+  ownerName: string;
+  mobileNumber: string;
+  location: string;
+  about: string;
+  bureauId: string;
+  distributorId: string;
+  bureauNmae: string;
+}
+
+export interface GetUserPayload {
+  distributorId: string
+}
+
 // Response Types (if needed)
 export interface AuthResponse {
   token: string;

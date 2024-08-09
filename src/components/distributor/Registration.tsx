@@ -5,11 +5,15 @@ import { useNavigate } from "react-router-dom";
 import SuccessModal from "./SuccessModal";
 import GlobalModal from "../GlobalModal";
 import { registerDistributor } from "../../services/authServices";
-import ImageUploadComponent from "../ImageUpload";
+import ImageUploadComponent from "../image/ImageUpload";
 
 const RegistrationForm: React.FC = () => {
+  const navigate: any = useNavigate();
   const [termsOpen, setTermsOpen] = useState(false);
   const [uploadImages, setUploadImages] = useState(false);
+  const [imageFiles, setImages] = useState([]) as any;
+  const [successModalOpen, setSuccessModalOpen] = useState(false);
+  const [distributorId, setDistributorId] = useState("");
   const [formData, setFormData] = useState({
     fullName: "",
     companyName: "",
@@ -30,9 +34,6 @@ const RegistrationForm: React.FC = () => {
     terms: "",
     fileUpload: "",
   });
-  const [successModalOpen, setSuccessModalOpen] = useState(false);
-  const [distributorId, setDistributorId] = useState("");
-  const navigate: any = useNavigate();
 
   const handleTermsOpen = (
     e: React.MouseEvent<HTMLSpanElement, MouseEvent>
@@ -93,29 +94,48 @@ const RegistrationForm: React.FC = () => {
     return isValid;
   };
 
+  const generateDistributorId = () => {
+    const randomNumber = Math.floor(10000 + Math.random() * 90000); // Generates a 5-digit number
+    return `D${randomNumber}`;
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Validate the form before submitting
+    if (!validateForm()) {
+      return;
+    }
+
     // Create a FormData object to handle file uploads
+    const id: any = generateDistributorId();
     const formData_: any = new FormData();
     formData_.append("email", formData.email);
     formData_.append("password", formData.password);
     formData_.append("fullName", formData.fullName);
+    formData_.append("companyName", formData.companyName);
     formData_.append("mobileNumber", formData.mobileNumber);
-    formData_.append("address", formData.address);
+    formData_.append("location", formData.address);
+    formData_.append("distributorId", id);
 
-    // Append file if it exists
-    if (formData.fileUpload) {
-      formData_.append("fileUpload", formData.fileUpload);
-    }
+    // Append banner images
+    imageFiles.forEach((file: any, index: any) => {
+      if (file) {
+        formData_.append(`bannerImage${index + 1}`, file);
+      }
+    });
 
     try {
       // Send form data to the server
-      await registerDistributor(formData_);
-      setSuccessModalOpen(true);
-      // Simulate form submission and generate a Distributor ID
-      const generatedDistributorId = "DIS123456"; // Example ID, replace with actual logic
-      setDistributorId(generatedDistributorId);
-      setSuccessModalOpen(true);
+      const res: any = await registerDistributor(formData_);
+      if (res.status === 1) {
+        setDistributorId(id);
+        setSuccessModalOpen(true);
+      } else {
+        alert("Mobile number already exists");
+        setUploadImages(false);
+      }
+
     } catch (error) {
       console.error("Error registering distributor:", error);
     }
@@ -136,25 +156,33 @@ const RegistrationForm: React.FC = () => {
     }
   };
 
+  console.log("images___", imageFiles)
+
   return (
     <>
-      <Navbar />
+      <Navbar title="Riya Matrymony" tab1="Home" tab2="Login" tab3="Register" />
       <div>
-        {uploadImages ? <>
-          <ImageUploadComponent />
-          <button
-            onClick={handleSubmit}
-            className=" m-6 px-4 py-2 bg-indigo-600 text-white font-semibold rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-          >
-            Submit
-          </button>
-        </> : <>
+        {uploadImages ? (
+          <>
+            <ImageUploadComponent setImagesList={setImages} />
+            <div className="text-center">
+              <button
+                onClick={handleSubmit}
+                className="m-6 px-4 py-2 w-[40vh] bg-indigo-600 text-white font-semibold rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              >
+                Submit
+              </button>
+            </div>
+            <div className="text-blue-500 text-center my-4">
+              <a href="/login">Already have an account | login here</a>
+            </div>
+          </>
+        ) : (
           <div className="flex items-center justify-center min-h-screen bg-gray-100 p-4">
-            <form
-              onSubmit={handleSubmit}
+            <div
               className="bg-white p-8 rounded-lg shadow-md w-full max-w-lg"
             >
-              <h1 className="text-2xl font-bold mb-6 text-center">
+              <h1 className="text-3xl font-bold mb-6 text-center font-serif	">
                 Create Distributor account
               </h1>
               <div className="mb-4">
@@ -180,7 +208,7 @@ const RegistrationForm: React.FC = () => {
               </div>
               <div className="mb-4">
                 <label
-                  htmlFor="fullName"
+                  htmlFor="companyName"
                   className="block text-sm font-medium text-gray-700"
                 >
                   Company Name/Society Name <span className="text-red-500">*</span>
@@ -195,8 +223,8 @@ const RegistrationForm: React.FC = () => {
                   value={formData.companyName}
                   onChange={handleChange}
                 />
-                {errors.fullName && (
-                  <p className="text-red-500 text-xs mt-1">{errors.fullName}</p>
+                {errors.companyName && (
+                  <p className="text-red-500 text-xs mt-1">{errors.companyName}</p>
                 )}
               </div>
               <div className="mb-4">
@@ -238,7 +266,9 @@ const RegistrationForm: React.FC = () => {
                   onChange={handleChange}
                 />
                 {errors.mobileNumber && (
-                  <p className="text-red-500 text-xs mt-1">{errors.mobileNumber}</p>
+                  <p className="text-red-500 text-xs mt-1">
+                    {errors.mobileNumber}
+                  </p>
                 )}
               </div>
               <div className="mb-4">
@@ -272,102 +302,71 @@ const RegistrationForm: React.FC = () => {
                 <textarea
                   id="address"
                   name="address"
-                  className={`mt-1 h-40 block w-full px-3 py-2 border ${errors.address ? "border-red-500" : "border-gray-300"
+                  className={`mt-1 block w-full px-3 py-2 border ${errors.address ? "border-red-500" : "border-gray-300"
                     } rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm`}
                   placeholder="Enter your address"
                   value={formData.address}
                   onChange={handleChange}
-                />
+                ></textarea>
                 {errors.address && (
                   <p className="text-red-500 text-xs mt-1">{errors.address}</p>
                 )}
               </div>
               <div className="mb-4">
                 <label
-                  htmlFor="fileUpload"
-                  className="block text-sm font-medium text-gray-700"
+                  htmlFor="terms"
+                  className="inline-flex items-center text-sm font-medium text-gray-700"
                 >
-                  Upload PAN Card / Aadhaar Card
-                </label>
-                <input
-                  type="file"
-                  id="fileUpload"
-                  name="fileUpload"
-                  className={`mt-1 block w-full text-sm text-gray-500 file:py-2 file:px-4 file:border ${errors.fileUpload
-                    ? "file:border-red-500"
-                    : "file:border-gray-300"
-                    } file:rounded-md file:text-sm file:font-semibold file:bg-gray-100 hover:file:bg-gray-200`}
-                  onChange={handleChange}
-                />
-                {errors.fileUpload && (
-                  <p className="text-red-500 text-xs mt-1">{errors.fileUpload}</p>
-                )}
-              </div>
-              <div className="mb-6">
-                <div className="flex items-center">
                   <input
                     type="checkbox"
                     id="terms"
                     name="terms"
-                    className={`mr-2 h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500 ${errors.terms ? "border-red-500" : ""
-                      }`}
+                    className={`mr-2 ${errors.terms ? "border-red-500" : "border-gray-300"
+                      } rounded shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm`}
                     checked={formData.terms}
                     onChange={handleChange}
                   />
-                  <label
-                    htmlFor="terms"
-                    className="block text-sm font-medium text-gray-700"
+                  I agree to the{" "}
+                  <span
+                    className="text-blue-600 cursor-pointer"
+                    onClick={handleTermsOpen}
                   >
-                    I agree to the{" "}
-                    <a
-                      href="#"
-                      onClick={handleTermsOpen}
-                      className="text-indigo-600 hover:text-indigo-500"
-                    >
-                      terms and conditions
-                    </a>
-                    .
-                  </label>
-                </div>
+                    terms and conditions
+                  </span>
+                </label>
                 {errors.terms && (
-                  <p className="text-red-500 text-xs mt-1 ml-6">{errors.terms}</p>
+                  <p className="text-red-500 text-xs mt-1">{errors.terms}</p>
                 )}
               </div>
-              <button
-                onClick={() => { handleNextBtn() }}
-                className="w-full px-4 py-2 bg-indigo-600 text-white font-semibold rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-              >
-                Next
-              </button>
-              {/* <button
-              type="submit"
-              className="w-full px-4 py-2 bg-indigo-600 text-white font-semibold rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-            >
-              Submit
-            </button> */}
-              <div className="text-center mt-4 text-blue-500">
-                <a href="/login">Already have an account | Login</a>
+              <div className="flex justify-between">
+                <button
+                  type="button"
+                  className="m-6 px-4 py-2 w-full bg-indigo-600 text-white font-semibold rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  onClick={handleNextBtn}
+                >
+                  Next
+                </button>
               </div>
-            </form>
+              <div className="text-blue-500 text-center my-4">
+                <a href="/login">Already have an account | login here</a>
+              </div>
+            </div>
           </div>
-        </>}
-      </div>
-      {/* Success Modal */}
-      {successModalOpen && (
-        <SuccessModal
+        )}
+        {termsOpen && (
+          <GlobalModal
+            handleTermsModalClose={handleTermsModalClose}
+            title={"Terms and Conditions"}
+            message={"list comes here"}
+          />
+        )}
+        {successModalOpen && (<SuccessModal
+          isOpen={successModalOpen}
+          onClose={handleSuccessModalClose}
           distributorId={distributorId}
-          handleSuccessModalClose={handleSuccessModalClose}
-        />
-      )}
+        />)}
 
-      {/* {terms modal} */}
-      {termsOpen && (
-        <GlobalModal
-          handleTermsModalClose={handleTermsModalClose}
-          title={"Terms and Conditions"}
-          message={"list comes here"}
-        />
-      )}
+      </div>
       <Footer />
     </>
   );

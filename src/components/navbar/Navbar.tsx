@@ -1,26 +1,27 @@
 import React, { useState } from "react";
-import {
-  FaHome,
-  FaSignInAlt,
-  FaUserPlus,
-  FaBars,
-  FaTimes,
-} from "react-icons/fa";
-import { Navigate, useNavigate } from "react-router-dom";
+import { FaHome, FaSignInAlt, FaUserPlus, FaBars, FaTimes } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = (props: any) => {
-  const { title, tab1, tab2, tab3 } = props;
+  const { title, tab1, tab3, screenType, distributorId } = props;
   const [isOpen, setIsOpen] = useState(false);
-  const navigate: any = useNavigate();
+  const navigate = useNavigate();
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
 
+  const handleLogout = () => {
+    // Clear all data from local storage
+    localStorage.clear();
+    navigate('/login');
+  };
+
   return (
     <div className="bg-amber-500 text-white">
       <div className="container mx-auto flex justify-between items-center p-4">
-        <h1 className="text-xl font-bold">{title}</h1>
+        <h1 className="text-xl">{title}</h1>
+        {distributorId ? <h1>{distributorId}</h1> : ''}
         <div className="md:hidden" onClick={toggleMenu}>
           {isOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
         </div>
@@ -30,21 +31,27 @@ const Navbar = (props: any) => {
         >
           <li
             onClick={() => {
-              navigate("/");
+              if (screenType === "DISTRIBUTOR") {
+                navigate("/distributorDashboard");
+              } else {
+                navigate("/");
+              }
             }}
-            className="flex items-center my-2 md:my-0 cursor-pointer	"
+            className="flex items-center my-2 md:my-0 cursor-pointer"
           >
             <FaHome className="mr-2" />
             <span>{tab1}</span>
           </li>
           <li className="flex items-center my-2 md:my-0">
-            <FaSignInAlt className="mr-2" />
-            <span>{tab2}</span>
-          </li>
-          <li className="flex items-center my-2 md:my-0">
             <FaUserPlus className="mr-2" />
             <span>{tab3}</span>
           </li>
+          {distributorId && (
+            <li onClick={handleLogout} className="flex items-center my-2 md:my-0 cursor-pointer">
+              <FaSignInAlt className="mr-2" />
+              <span>Logout</span>
+            </li>
+          )}
           <li className="absolute top-4 right-4 md:hidden" onClick={toggleMenu}>
             <FaTimes size={24} />
           </li>

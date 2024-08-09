@@ -1,7 +1,9 @@
 import apiClient from "../index";
 import {
+  BureauAccountRegisterPayload,
   DistributorLoginPayload,
   DistributorRegisterPayload,
+  GetUserPayload,
 } from "../models/authModels";
 
 // Utility function to build query strings
@@ -12,6 +14,10 @@ const buildQueryString = (params: { [key: string]: any }) => {
 // Login: GET method
 export const distributorLogin = (loginData: DistributorLoginPayload) =>
   apiClient.get(`/distributor/login?${buildQueryString(loginData)}`);
+
+
+export const distributorUser = (paramsData: GetUserPayload) =>
+  apiClient.get(`/distributor/getUserById?${buildQueryString(paramsData)}`);
 
 // Register: POST method
 export const distributorRegister = async (
@@ -31,3 +37,17 @@ export const updateDistributor = (
   distributorId: string,
   updateData: Partial<DistributorRegisterPayload> // Adjust type as needed
 ) => apiClient.put(`/distributor/${distributorId}`, updateData);
+
+
+export const bureauRegister = async (
+  formData: BureauAccountRegisterPayload
+) =>
+  apiClient.post("/bureau/register", formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+
+export const bureauUsers = (paramsData: GetUserPayload) =>
+  apiClient.get(`/bureau/getUsersById?${buildQueryString(paramsData)}`);
+

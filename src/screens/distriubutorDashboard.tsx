@@ -1,13 +1,47 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/navbar/Navbar";
+import { getBureauUsers } from "../services/authServices";
+import BureauRecordTable from "../components/distributor/BureauRecordTable";
 
-const DistriubutorDashboard: React.FC = () => {
+interface DistributorProfile {
+  companyName: string;
+  distributorId: string;
+}
+
+const DistributorDashboard: React.FC = () => {
   const navigate = useNavigate();
+  const [bureauUsers, setBureauUsers] = useState<any[]>([]);
+  const [distributorProfile, setDistributorProfile] = useState<DistributorProfile>({
+    companyName: "Your Company Name",
+    distributorId: "DXXXXXX"
+  });
+
+  const fetchDistributorDetails = async (distributorId: string) => {
+    try {
+      const res: any = await getBureauUsers({ distributorId });
+      if (res.status === 1) {
+        setBureauUsers(res.data);
+      } else {
+        console.error("Failed to fetch bureau users:", res.message);
+      }
+    } catch (error) {
+      console.error("An error occurred while fetching bureau users:", error);
+    }
+  };
+
+  useEffect(() => {
+    const distributorId = localStorage.getItem('distributorId') || "DXXXXXX";
+    const companyName: any = localStorage.getItem('companyName') || "Your Company Name";
+    setDistributorProfile({ distributorId, companyName });
+    fetchDistributorDetails(distributorId);
+  }, []);
 
   const handleShareAccountClick = () => {
-    // navigate("/distributorDashboard/create-breau-account");
+    const formattedCompanyName = distributorProfile?.companyName.replace(/\s+/g, '-');
+    navigate(`/${formattedCompanyName}/${distributorProfile.distributorId}`);
   };
+
 
   const handleCreateMarriageAccountClick = () => {
     navigate("/distributorDashboard/create-marriage-bureau-account");
@@ -15,9 +49,9 @@ const DistriubutorDashboard: React.FC = () => {
 
   return (
     <>
-      <Navbar title="Distributor Company Name" tab1="Home" tab2="12345" tab3="Profile" />
-      <div className="min-h-screen flex flex-col items-center justify-center">
-        <div className="flex space-x-4 mb-8">
+      <Navbar title={distributorProfile.companyName} distributorId={distributorProfile.distributorId} tab1="Home" tab2="12345" tab3="Profile" screenType="DISTRIBUTOR" />
+      <div className="mt-1 flex flex-col items-center justify-center">
+        <div className="flex space-x-4 m-4">
           <button
             onClick={handleShareAccountClick}
             className="bg-blue-500 text-white py-2 px-4 rounded-md"
@@ -26,38 +60,17 @@ const DistriubutorDashboard: React.FC = () => {
           </button>
           <button
             onClick={handleCreateMarriageAccountClick}
-
             className="bg-green-500 text-white py-2 px-4 rounded-md"
           >
             Create Marriage Bureau Account
           </button>
         </div>
-        <div className="overflow-x-auto w-full max-w-4xl">
-          <table className="min-w-full bg-white shadow-md rounded-lg">
-            <thead>
-              <tr className="bg-gray-100">
-                <th className="py-2 px-4 border-b">S.No</th>
-                <th className="py-2 px-4 border-b">Bureau Name</th>
-                <th className="py-2 px-4 border-b">About</th>
-                <th className="py-2 px-4 border-b">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td className="py-2 px-4 border-b text-center">1</td>
-                <td className="py-2 px-4 border-b text-center">Example Bureau</td>
-                <td className="py-2 px-4 border-b text-center">Description of the bureau</td>
-                <td className="py-2 px-4 border-b text-center">
-                  <button className="bg-red-500 text-white py-1 px-3 rounded-md">Delete</button>
-                </td>
-              </tr>
-              {/* More rows can be added here */}
-            </tbody>
-          </table>
+        <div className="overflow-x-auto w-full">
+          <BureauRecordTable records={bureauUsers} />
         </div>
       </div>
     </>
   );
 };
 
-export default DistriubutorDashboard;
+export default DistributorDashboard;

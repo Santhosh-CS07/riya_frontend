@@ -2,19 +2,22 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { loginDistributor } from "../../services/authServices";
 import Navbar from "../navbar/Navbar";
-import RegistrationForm from "./RegistrationForm";
+import RegistrationForm from "./Registration";
 import Footer from "../footer/Footer";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const LoginPage = () => {
-  const navigate: any = useNavigate();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     distributorId: "",
     password: "",
-  }) as any;
+  });
   const [errors, setErrors] = useState({
     distributorId: "",
     password: "",
+    notFound: ""
   }) as any;
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleCreateAccountClick = () => {
     navigate("/create-distributor-account");
@@ -54,38 +57,53 @@ const LoginPage = () => {
     e.preventDefault();
     if (validateForm()) {
       try {
-        await loginDistributor({
+        const res: any = await loginDistributor({
           distributorId: formData.distributorId,
           password: formData.password,
         });
-        console.log("Form submitted successfully");
-        navigate("/distributorDashboard");
-        // Handle successful login (e.g., redirect, store token)
+        const distributorId: any = res?.data?.distributorId;
+        const companyName: any = res?.data?.companyName;
+        if (res.status === 1) {
+          localStorage.setItem('distributorId', distributorId);
+          localStorage.setItem('companyName', companyName);
+          navigate("/distributorDashboard");
+        } else {
+          setErrors({ notFound: "Invalid Credentials" });
+        }
       } catch (err) {
         console.log("Failed to login");
       }
     }
   };
 
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
   return (
     <>
-      <Navbar />
+      <Navbar title="Riya Matrymony" tab1="Home" tab2="Login" tab3="Register" />
+
       <div className="flex items-center justify-center py-24 bg-gray-100">
         <form
           onSubmit={handleSubmit}
           className="bg-white p-6 sm:p-8 rounded shadow-md w-full max-w-xs sm:max-w-md"
         >
-          <h1 className="text-xl sm:text-2xl font-bold mb-6 text-center">
+          <h1 className="text-3xl font-bold mb-6 text-center font-serif">
             Login
           </h1>
+          {errors.notFound && (
+            <p className="text-red-500 text-bold text-center mb-4">
+              {errors.notFound}
+            </p>
+          )}
           <div className="mb-4">
             <input
               type="text"
               id="distributorId"
               name="distributorId"
-              className={`mt-1 block w-full px-3 py-2 border ${
-                errors.distributorId ? "border-red-500" : "border-gray-300"
-              } rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm`}
+              className={`mt-1 block w-full px-3 py-2 border ${errors.distributorId ? "border-red-500" : "border-gray-300"
+                } rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm`}
               placeholder="Distributor Id"
               value={formData.distributorId}
               onChange={handleChange}
@@ -96,18 +114,23 @@ const LoginPage = () => {
               </p>
             )}
           </div>
-          <div className="mb-6">
+          <div className="mb-6 relative">
             <input
-              type="password"
+              type={showPassword ? "text" : "password"}
               id="password"
               name="password"
-              className={`mt-1 block w-full px-3 py-2 border ${
-                errors.password ? "border-red-500" : "border-gray-300"
-              } rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm`}
+              className={`mt-1 block w-full px-3 py-2 border ${errors.password ? "border-red-500" : "border-gray-300"
+                } rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm`}
               placeholder="Password"
               value={formData.password}
               onChange={handleChange}
             />
+            <div
+              className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5 cursor-pointer"
+              onClick={togglePasswordVisibility}
+            >
+              {showPassword ? <FaEyeSlash /> : <FaEye />}
+            </div>
             {errors.password && (
               <p className="text-red-500 text-xs mt-1">{errors.password}</p>
             )}
