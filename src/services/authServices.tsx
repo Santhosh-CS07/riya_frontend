@@ -3,7 +3,7 @@ import {
   distributorLogin,
   distributorRegister,
   bureauUsers,
-  distributorUser
+  distributorUser,
 } from "../api/endpoints/authEndPoints";
 import {
   BureauAccountRegisterPayload,
@@ -32,7 +32,7 @@ export const registerDistributor = async (
   }
 };
 
-export const registerBureauAccount = async (
+export const registerBureauAccount: any = async (
   registerData: BureauAccountRegisterPayload
 ) => {
   try {
@@ -60,4 +60,3 @@ export const getDistributorProfile = async (getParms: GetUserPayload) => {
     throw new Error("data fetch failed");
   }
 };
-

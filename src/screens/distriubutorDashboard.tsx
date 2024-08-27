@@ -12,10 +12,11 @@ interface DistributorProfile {
 const DistributorDashboard: React.FC = () => {
   const navigate = useNavigate();
   const [bureauUsers, setBureauUsers] = useState<any[]>([]);
-  const [distributorProfile, setDistributorProfile] = useState<DistributorProfile>({
-    companyName: "Your Company Name",
-    distributorId: "DXXXXXX"
-  });
+  const [distributorProfile, setDistributorProfile] =
+    useState<DistributorProfile>({
+      companyName: "Your Company Name",
+      distributorId: "DXXXXXX",
+    });
 
   const fetchDistributorDetails = async (distributorId: string) => {
     try {
@@ -31,17 +32,20 @@ const DistributorDashboard: React.FC = () => {
   };
 
   useEffect(() => {
-    const distributorId = localStorage.getItem('distributorId') || "DXXXXXX";
-    const companyName: any = localStorage.getItem('companyName') || "Your Company Name";
+    const distributorId = localStorage.getItem("distributorId") || "DXXXXXX";
+    const companyName: any =
+      localStorage.getItem("companyName") || "Your Company Name";
     setDistributorProfile({ distributorId, companyName });
     fetchDistributorDetails(distributorId);
   }, []);
 
   const handleShareAccountClick = () => {
-    const formattedCompanyName = distributorProfile?.companyName.replace(/\s+/g, '-');
+    const formattedCompanyName = distributorProfile?.companyName.replace(
+      /\s+/g,
+      "-"
+    );
     navigate(`/${formattedCompanyName}/${distributorProfile.distributorId}`);
   };
-
 
   const handleCreateMarriageAccountClick = () => {
     navigate("/distributorDashboard/create-marriage-bureau-account");
@@ -49,8 +53,15 @@ const DistributorDashboard: React.FC = () => {
 
   return (
     <>
-      <Navbar title={distributorProfile.companyName} distributorId={distributorProfile.distributorId} tab1="Home" tab2="12345" tab3="Profile" screenType="DISTRIBUTOR" />
-      <div className="mt-1 flex flex-col items-center justify-center">
+      <Navbar
+        title={distributorProfile.companyName}
+        distributorId={distributorProfile.distributorId}
+        tab1="Home"
+        tab2="12345"
+        tab3="Profile"
+        screenType="DISTRIBUTOR"
+      />
+      <div className="mt-40 flex flex-col items-center justify-center">
         <div className="flex space-x-4 m-4">
           <button
             onClick={handleShareAccountClick}

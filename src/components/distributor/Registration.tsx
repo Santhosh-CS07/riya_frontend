@@ -95,8 +95,10 @@ const RegistrationForm: React.FC = () => {
   };
 
   const generateDistributorId = () => {
-    const randomNumber = Math.floor(10000 + Math.random() * 90000); // Generates a 5-digit number
-    return `D${randomNumber}`;
+    const randomNumber = Math.floor(
+      1000000000000 + Math.random() * 9000000000000
+    );
+    return randomNumber;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -135,7 +137,6 @@ const RegistrationForm: React.FC = () => {
         alert("Mobile number already exists");
         setUploadImages(false);
       }
-
     } catch (error) {
       console.error("Error registering distributor:", error);
     }
@@ -156,12 +157,12 @@ const RegistrationForm: React.FC = () => {
     }
   };
 
-  console.log("images___", imageFiles)
+  console.log("images___", imageFiles);
 
   return (
     <>
       <Navbar title="Riya Matrymony" tab1="Home" tab2="Login" tab3="Register" />
-      <div>
+      <div className="mt-20">
         {uploadImages ? (
           <>
             <ImageUploadComponent setImagesList={setImages} />
@@ -179,9 +180,7 @@ const RegistrationForm: React.FC = () => {
           </>
         ) : (
           <div className="flex items-center justify-center min-h-screen bg-gray-100 p-4">
-            <div
-              className="bg-white p-8 rounded-lg shadow-md w-full max-w-lg"
-            >
+            <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-lg">
               <h1 className="text-3xl font-bold mb-6 text-center font-serif	">
                 Create Distributor account
               </h1>
@@ -196,8 +195,9 @@ const RegistrationForm: React.FC = () => {
                   type="text"
                   id="fullName"
                   name="fullName"
-                  className={`mt-1 block w-full px-3 py-2 border ${errors.fullName ? "border-red-500" : "border-gray-300"
-                    } rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm`}
+                  className={`mt-1 block w-full px-3 py-2 border ${
+                    errors.fullName ? "border-red-500" : "border-gray-300"
+                  } rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm`}
                   placeholder="Enter your full name"
                   value={formData.fullName}
                   onChange={handleChange}
@@ -211,20 +211,24 @@ const RegistrationForm: React.FC = () => {
                   htmlFor="companyName"
                   className="block text-sm font-medium text-gray-700"
                 >
-                  Company Name/Society Name <span className="text-red-500">*</span>
+                  Company Name/Society Name{" "}
+                  <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="text"
                   id="companyName"
                   name="companyName"
-                  className={`mt-1 block w-full px-3 py-2 border ${errors.companyName ? "border-red-500" : "border-gray-300"
-                    } rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm`}
+                  className={`mt-1 block w-full px-3 py-2 border ${
+                    errors.companyName ? "border-red-500" : "border-gray-300"
+                  } rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm`}
                   placeholder="Enter your Company name"
                   value={formData.companyName}
                   onChange={handleChange}
                 />
                 {errors.companyName && (
-                  <p className="text-red-500 text-xs mt-1">{errors.companyName}</p>
+                  <p className="text-red-500 text-xs mt-1">
+                    {errors.companyName}
+                  </p>
                 )}
               </div>
               <div className="mb-4">
@@ -238,8 +242,9 @@ const RegistrationForm: React.FC = () => {
                   type="email"
                   id="email"
                   name="email"
-                  className={`mt-1 block w-full px-3 py-2 border ${errors.email ? "border-red-500" : "border-gray-300"
-                    } rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm`}
+                  className={`mt-1 block w-full px-3 py-2 border ${
+                    errors.email ? "border-red-500" : "border-gray-300"
+                  } rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm`}
                   placeholder="Enter your email"
                   value={formData.email}
                   onChange={handleChange}
@@ -259,8 +264,9 @@ const RegistrationForm: React.FC = () => {
                   type="tel"
                   id="mobileNumber"
                   name="mobileNumber"
-                  className={`mt-1 block w-full px-3 py-2 border ${errors.mobileNumber ? "border-red-500" : "border-gray-300"
-                    } rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm`}
+                  className={`mt-1 block w-full px-3 py-2 border ${
+                    errors.mobileNumber ? "border-red-500" : "border-gray-300"
+                  } rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm`}
                   placeholder="Enter your mobile number"
                   value={formData.mobileNumber}
                   onChange={handleChange}
@@ -282,8 +288,9 @@ const RegistrationForm: React.FC = () => {
                   type="password"
                   id="password"
                   name="password"
-                  className={`mt-1 block w-full px-3 py-2 border ${errors.password ? "border-red-500" : "border-gray-300"
-                    } rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm`}
+                  className={`mt-1 block w-full px-3 py-2 border ${
+                    errors.password ? "border-red-500" : "border-gray-300"
+                  } rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm`}
                   placeholder="Enter your password"
                   value={formData.password}
                   onChange={handleChange}
@@ -302,8 +309,9 @@ const RegistrationForm: React.FC = () => {
                 <textarea
                   id="address"
                   name="address"
-                  className={`mt-1 block w-full px-3 py-2 border ${errors.address ? "border-red-500" : "border-gray-300"
-                    } rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm`}
+                  className={`mt-1 block w-full px-3 py-2 border ${
+                    errors.address ? "border-red-500" : "border-gray-300"
+                  } rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm`}
                   placeholder="Enter your address"
                   value={formData.address}
                   onChange={handleChange}
@@ -321,8 +329,9 @@ const RegistrationForm: React.FC = () => {
                     type="checkbox"
                     id="terms"
                     name="terms"
-                    className={`mr-2 ${errors.terms ? "border-red-500" : "border-gray-300"
-                      } rounded shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm`}
+                    className={`mr-2 ${
+                      errors.terms ? "border-red-500" : "border-gray-300"
+                    } rounded shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm`}
                     checked={formData.terms}
                     onChange={handleChange}
                   />
@@ -360,12 +369,13 @@ const RegistrationForm: React.FC = () => {
             message={"list comes here"}
           />
         )}
-        {successModalOpen && (<SuccessModal
-          isOpen={successModalOpen}
-          onClose={handleSuccessModalClose}
-          distributorId={distributorId}
-        />)}
-
+        {successModalOpen && (
+          <SuccessModal
+            isOpen={successModalOpen}
+            onClose={handleSuccessModalClose}
+            distributorId={distributorId}
+          />
+        )}
       </div>
       <Footer />
     </>
