@@ -55,7 +55,8 @@ const DistributorDashboard: React.FC = () => {
     <>
       <Navbar
         title={distributorProfile.companyName}
-        distributorId={distributorProfile.distributorId}
+        distributorId="Distributor Admin Panel"
+        // distributorId={distributorProfile.distributorId}
         tab1="Home"
         tab2="12345"
         tab3="Profile"
