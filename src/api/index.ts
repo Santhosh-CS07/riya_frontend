@@ -1,8 +1,8 @@
 import axios from 'axios';
 
 const apiClient = axios.create({
-  baseURL: 'http://localhost:5000/', 
-  // baseURL: 'http://bharatboook.com:5000/', 
+  // baseURL: 'http://localhost:5000/', 
+  baseURL: 'https://api.gitapps.in/', 
   headers: {
     'Content-Type': 'application/json',
   },
