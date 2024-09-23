@@ -27,6 +27,7 @@ export const distributorRegister = async (
     headers: {
       "Content-Type": "multipart/form-data",
     },
+     withCredentials: true, // Enable if cookies or authentication headers are required
   });
 // Delete distributor: DELETE method
 export const deleteDistributor = (distributorId: string) =>
