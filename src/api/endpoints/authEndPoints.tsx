@@ -28,6 +28,7 @@ export const distributorRegister = async (
     headers: {
       "Content-Type": "multipart/form-data",
     },
+     withCredentials: true, // Enable if cookies or authentication headers are required
   });
 
 export const createImages = async (images: imagePayLoad) =>
