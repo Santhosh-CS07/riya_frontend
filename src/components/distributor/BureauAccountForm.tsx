@@ -1,13 +1,16 @@
 import React, { useState } from "react";
 import ImageUploadComponent from "../image/ImageUpload";
 import { useNavigate } from "react-router-dom";
-import { registerBureauAccount } from "../../services/authServices";
+import {
+  bureauCreateImages,
+  registerBureauAccount,
+} from "../../services/authServices";
 
 const BureauAccountForm = ({ Id, setCreateBureauAccountForm }: any) => {
   const navigate = useNavigate();
   const distributorId = localStorage.getItem("distributorId") || Id;
   const companyName = localStorage.getItem("companyName");
-  const [imageFiles, setImages] = useState<File[]>([]);
+  const [imageFiles, setImages] = useState([]) as any;
   const [formData, setFormData] = useState({
     bureauName: "",
     mobile: "",
@@ -104,16 +107,20 @@ const BureauAccountForm = ({ Id, setCreateBureauAccountForm }: any) => {
     formData_.append("email", formData.email);
     formData_.append("bureauId", id);
     formData_.append("distributorId", distributorId || "");
-    imageFiles.forEach((file, index) => {
-      if (file) {
-        formData_.append(`bannerImage${index + 1}`, file);
-      }
-    });
-
     try {
       // Send form data to the server
       const res = await registerBureauAccount(formData_);
       if (res.status === 1) {
+        // inserting images
+        for (let img = 0; img < imageFiles.length; img++) {
+          if (imageFiles[img]) {
+            // Check if the image is not null
+            await bureauCreateImages({
+              images: imageFiles[img],
+              bureauId: id,
+            });
+          }
+        }
         alert("Bureau Account Created Successfully");
         if (!setCreateBureauAccountForm) {
           navigate("/distributorDashboard");

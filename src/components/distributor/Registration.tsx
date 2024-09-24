@@ -4,7 +4,10 @@ import Navbar from "../navbar/Navbar";
 import { useNavigate } from "react-router-dom";
 import SuccessModal from "./SuccessModal";
 import GlobalModal from "../GlobalModal";
-import { registerDistributor } from "../../services/authServices";
+import {
+  distributorCreateImages,
+  registerDistributor,
+} from "../../services/authServices";
 import ImageUploadComponent from "../image/ImageUpload";
 
 const RegistrationForm: React.FC = () => {
@@ -22,7 +25,6 @@ const RegistrationForm: React.FC = () => {
     password: "",
     address: "",
     terms: false,
-    fileUpload: null,
   });
   const [errors, setErrors] = useState({
     fullName: "",
@@ -32,7 +34,6 @@ const RegistrationForm: React.FC = () => {
     password: "",
     address: "",
     terms: "",
-    fileUpload: "",
   });
 
   const handleTermsOpen = (
@@ -120,17 +121,21 @@ const RegistrationForm: React.FC = () => {
     formData_.append("location", formData.address);
     formData_.append("distributorId", id);
 
-    // Append banner images
-    imageFiles.forEach((file: any, index: any) => {
-      if (file) {
-        formData_.append(`bannerImage${index + 1}`, file);
-      }
-    });
-
     try {
       // Send form data to the server
       const res: any = await registerDistributor(formData_);
       if (res.status === 1) {
+        // inserting images
+        for (let img = 0; img < imageFiles.length; img++) {
+          if (imageFiles[img]) {
+            // Check if the image is not null
+            await distributorCreateImages({
+              images: imageFiles[img],
+              distributorId: id,
+            });
+          }
+        }
+
         setDistributorId(id);
         setSuccessModalOpen(true);
       } else {

@@ -12,7 +12,14 @@ export interface DistributorRegisterPayload {
   address: string;
   filePath: string;
 }
-
+export interface imagePayLoad {
+  images: string;
+  distributorId: string;
+}
+export interface bureauImagePayLoad {
+  images: string;
+  bureauId: string;
+}
 export interface BureauAccountRegisterPayload {
   email: string;
   password: string;
@@ -26,7 +33,7 @@ export interface BureauAccountRegisterPayload {
 }
 
 export interface GetUserPayload {
-  distributorId: string
+  distributorId: string;
 }
 
 // Response Types (if needed)

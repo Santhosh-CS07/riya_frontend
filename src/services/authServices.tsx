@@ -4,12 +4,16 @@ import {
   distributorRegister,
   bureauUsers,
   distributorUser,
+  createImages,
+  createBureauImages,
 } from "../api/endpoints/authEndPoints";
 import {
   BureauAccountRegisterPayload,
+  bureauImagePayLoad,
   DistributorLoginPayload,
   DistributorRegisterPayload,
   GetUserPayload,
+  imagePayLoad,
 } from "../api/models/authModels";
 
 export const loginDistributor = async (loginData: DistributorLoginPayload) => {
@@ -26,6 +30,24 @@ export const registerDistributor = async (
 ) => {
   try {
     const response = await distributorRegister(registerData);
+    return response.data; // Return relevant data if needed
+  } catch (error) {
+    throw new Error("Registration failed");
+  }
+};
+
+export const distributorCreateImages = async (data: imagePayLoad) => {
+  try {
+    const response = await createImages(data);
+    return response.data; // Return relevant data if needed
+  } catch (error) {
+    throw new Error("Registration failed");
+  }
+};
+
+export const bureauCreateImages = async (data: bureauImagePayLoad) => {
+  try {
+    const response = await createBureauImages(data);
     return response.data; // Return relevant data if needed
   } catch (error) {
     throw new Error("Registration failed");
