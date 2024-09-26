@@ -19,6 +19,7 @@ export interface imagePayLoad {
 export interface bureauImagePayLoad {
   images: string;
   bureauId: string;
+  order: number;
 }
 export interface BureauAccountRegisterPayload {
   email: string;

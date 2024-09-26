@@ -19,6 +19,8 @@ const BureauAccountForm = ({ Id, setCreateBureauAccountForm }: any) => {
     email: "",
     ownerName: "",
     password: "",
+    expiryDate: "",
+    paymentStatus: "",
   });
 
   const [errors, setErrors] = useState({
@@ -29,12 +31,16 @@ const BureauAccountForm = ({ Id, setCreateBureauAccountForm }: any) => {
     email: "",
     ownerName: "",
     password: "",
+    expiryDate: "",
+    paymentStatus: "",
   });
 
   const [showNextComponent, setShowNextComponent] = useState(false);
 
   const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
   ) => {
     const { name, value } = e.target;
     setFormData({
@@ -44,7 +50,7 @@ const BureauAccountForm = ({ Id, setCreateBureauAccountForm }: any) => {
   };
 
   const validateForm = () => {
-    const newErrors = {
+    const newErrors: any = {
       bureauName: "",
       mobile: "",
       about: "",
@@ -52,6 +58,8 @@ const BureauAccountForm = ({ Id, setCreateBureauAccountForm }: any) => {
       email: "",
       ownerName: "",
       password: "",
+      expiryDate: "",
+      paymentStatus: "",
     };
 
     if (!formData.bureauName.trim())
@@ -98,6 +106,7 @@ const BureauAccountForm = ({ Id, setCreateBureauAccountForm }: any) => {
     e.preventDefault();
     const id: any = generateDistributorId();
     const formData_ = new FormData();
+    let payment: any = formData.paymentStatus == "Paid Member" ? 1 : 0;
     formData_.append("bureauName", formData.bureauName);
     formData_.append("password", formData.password);
     formData_.append("ownerName", formData.ownerName);
@@ -106,6 +115,8 @@ const BureauAccountForm = ({ Id, setCreateBureauAccountForm }: any) => {
     formData_.append("about", formData.about);
     formData_.append("email", formData.email);
     formData_.append("bureauId", id);
+    formData_.append("paymentStatus", payment);
+    formData_.append("expiryDate", formData.expiryDate);
     formData_.append("distributorId", distributorId || "");
     try {
       // Send form data to the server
@@ -118,6 +129,7 @@ const BureauAccountForm = ({ Id, setCreateBureauAccountForm }: any) => {
             await bureauCreateImages({
               images: imageFiles[img],
               bureauId: id,
+              order: img + 1,
             });
           }
         }
@@ -139,6 +151,8 @@ const BureauAccountForm = ({ Id, setCreateBureauAccountForm }: any) => {
         email: "",
         ownerName: "",
         password: "",
+        expiryDate: "",
+        paymentStatus: "",
       });
     } catch (error) {
       console.error("Error registering distributor:", error);
@@ -147,15 +161,7 @@ const BureauAccountForm = ({ Id, setCreateBureauAccountForm }: any) => {
 
   return (
     <>
-      {/* <Navbar
-        title={companyName}
-        tab1="Home"
-        tab2="12345"
-        tab3="Profile"
-        distributorId={distributorId}
-        screenType="DISTRIBUTOR"
-      /> */}
-      <div className="">
+      <div>
         {showNextComponent ? (
           <>
             <ImageUploadComponent setImagesList={setImages} />
@@ -170,7 +176,7 @@ const BureauAccountForm = ({ Id, setCreateBureauAccountForm }: any) => {
           </>
         ) : (
           <div className="flex items-center justify-center min-h-screen bg-gray-100 py-6">
-            <div className="bg-white p-6 sm:p-8 rounded shadow-md w-full max-w-xs sm:max-w-md">
+            <div className="bg-white p-6 sm:p-8 rounded shadow-md w-full sm:max-w-md">
               <h1 className="text-3xl font-bold mb-6 text-center font-serif">
                 Bureau Account Registration
               </h1>
@@ -240,6 +246,33 @@ const BureauAccountForm = ({ Id, setCreateBureauAccountForm }: any) => {
               </div>
               <div className="mb-4">
                 <label
+                  htmlFor="paymentStatus"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Payment Status
+                </label>
+                <select
+                  id="paymentStatus"
+                  name="paymentStatus"
+                  value={formData.paymentStatus}
+                  onChange={handleInputChange}
+                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                >
+                  <option value="" disabled>
+                    Select Payment Status
+                  </option>
+                  <option value="Paid Member">Paid Member</option>
+                  <option value="Free Member">Free Member</option>
+                </select>
+                {errors.paymentStatus && (
+                  <p className="text-red-500 text-xs mt-1">
+                    {errors.paymentStatus}
+                  </p>
+                )}
+              </div>
+
+              <div className="mb-4">
+                <label
                   htmlFor="email"
                   className="block text-sm font-medium text-gray-700"
                 >
@@ -258,7 +291,7 @@ const BureauAccountForm = ({ Id, setCreateBureauAccountForm }: any) => {
                   <p className="text-red-500 text-xs mt-1">{errors.email}</p>
                 )}
               </div>
-              <div className="mb-6">
+              <div className="mb-4">
                 <label
                   htmlFor="password"
                   className="block text-sm font-medium text-gray-700"
@@ -298,7 +331,28 @@ const BureauAccountForm = ({ Id, setCreateBureauAccountForm }: any) => {
                   <p className="text-red-500 text-xs mt-1">{errors.location}</p>
                 )}
               </div>
-              <div className="mb-6">
+              <div className="mb-4">
+                <label
+                  htmlFor="expiryDate"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Expiry Date
+                </label>
+                <input
+                  type="date"
+                  id="expiryDate"
+                  name="expiryDate"
+                  value={formData.expiryDate}
+                  onChange={handleInputChange}
+                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                />
+                {errors.expiryDate && (
+                  <p className="text-red-500 text-xs mt-1">
+                    {errors.expiryDate}
+                  </p>
+                )}
+              </div>
+              <div className="mb-4">
                 <label
                   htmlFor="about"
                   className="block text-sm font-medium text-gray-700"
@@ -310,10 +364,9 @@ const BureauAccountForm = ({ Id, setCreateBureauAccountForm }: any) => {
                   name="about"
                   value={formData.about}
                   onChange={handleInputChange}
-                  rows={4}
                   className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                  placeholder="Tell us about your bureau"
-                />
+                  placeholder="Tell us about your Bureau"
+                ></textarea>
                 {errors.about && (
                   <p className="text-red-500 text-xs mt-1">{errors.about}</p>
                 )}
@@ -321,7 +374,7 @@ const BureauAccountForm = ({ Id, setCreateBureauAccountForm }: any) => {
               <div className="text-center">
                 <button
                   onClick={handleNextBtn}
-                  className="w-full py-2 px-4 bg-indigo-500 text-white font-semibold rounded-md shadow-md hover:bg-indigo-600 focus:outline-none"
+                  className="mt-4 w-full py-2 px-4 bg-indigo-500 text-white font-semibold rounded-md shadow-md hover:bg-indigo-600 focus:outline-none"
                 >
                   Next
                 </button>
