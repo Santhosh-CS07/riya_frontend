@@ -6,6 +6,7 @@ import RegistrationForm from "./components/distributor/Registration";
 import DistriubutorDashboard from "./screens/distriubutorDashboard";
 import BureauAccountForm from "./components/distributor/BureauAccountForm";
 import DistributorWebsite from "./webView/distributorWebsite";
+import BureauWebsite from "./webView/bureauWebsite";
 function App() {
   return (
     <>
@@ -13,10 +14,26 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<LoginPage />} />
-          <Route path="/distributorDashboard" element={<DistriubutorDashboard />} />
-          <Route path="/create-distributor-account" element={<RegistrationForm />} />
-          <Route path="/distributorDashboard/create-marriage-bureau-account" element={<BureauAccountForm />} />
-          <Route path="/:companyName/:distributorId" element={<DistributorWebsite />} />
+          <Route
+            path="/distributorDashboard"
+            element={<DistriubutorDashboard />}
+          />
+          <Route
+            path="/create-distributor-account"
+            element={<RegistrationForm />}
+          />
+          <Route
+            path="/distributorDashboard/create-marriage-bureau-account"
+            element={<BureauAccountForm />}
+          />
+          <Route
+            path="/:companyName/:distributorId"
+            element={<DistributorWebsite />}
+          />
+          <Route
+            path="bureau-website/:bureauName/:bureauId"
+            element={<BureauWebsite />}
+          />
         </Routes>
       </BrowserRouter>
     </>

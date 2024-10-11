@@ -1,7 +1,8 @@
 import React from "react";
 import "../../App.css"; // Add your global styles
 
-const Footer = () => {
+const Footer = (props: any) => {
+  const { name, mobileNumber, location, email } = props;
   return (
     <footer className="bg-gradient-to-r from-blue-900 via-yellow-500 to-teal-600 text-white py-8">
       {/* Information, Others, Contact Section */}
@@ -35,12 +36,19 @@ const Footer = () => {
           <h4 className="text-lg font-semibold mb-2">Contact</h4>
           <hr className="border-white my-2 w-14" />
           <p>
-            Office Address:- flat no,103 , SRI Gayatri apartment,opp,D Mart,
-            Vanasthali puram, 500070, Hyderabad, Telangana,
+            {location ? (
+              <>{location} India</>
+            ) : (
+              <>
+                {" "}
+                Office Address:- flat no,103 , SRI Gayatri apartment,opp,D Mart,
+                Vanasthali puram, 500070, Hyderabad, Telangana,
+              </>
+            )}
           </p>
           <p>Contact: 9859242242, 9063420559</p>
-          <p>Email: madhulotmall108@gmail.com</p>
-          <p>Phone: 09859242242</p>
+          <p>Email: {email ? <>{email}</> : <>madhulotmall108@gmail.com</>}</p>
+          <p>Phone: {mobileNumber ? <>{mobileNumber}</> : <>09859242242</>}</p>
         </div>
       </div>
       <hr className="border-white my-4" />
@@ -78,7 +86,8 @@ const Footer = () => {
         </div>
         <div className="text-center">
           <p className="text-md">
-            &copy; 2024 Riyamatrimony.com | All Rights Reserved.
+            &copy; 2024 {name ? <>{name}</> : <>Riyamatrimony.com</>} | All
+            Rights Reserved.
           </p>
         </div>
       </div>

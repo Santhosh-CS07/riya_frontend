@@ -4,6 +4,7 @@ import {
   bureauImagePayLoad,
   DistributorLoginPayload,
   DistributorRegisterPayload,
+  GetBureauPayload,
   GetUserPayload,
   imagePayLoad,
 } from "../models/authModels";
@@ -28,7 +29,7 @@ export const distributorRegister = async (
     headers: {
       "Content-Type": "multipart/form-data",
     },
-     withCredentials: true, // Enable if cookies or authentication headers are required
+    withCredentials: true, // Enable if cookies or authentication headers are required
   });
 
 export const createImages = async (images: imagePayLoad) =>
@@ -56,3 +57,6 @@ export const bureauRegister = async (formData: BureauAccountRegisterPayload) =>
 
 export const bureauUsers = (paramsData: GetUserPayload) =>
   apiClient.get(`/bureau/getUsersById?${buildQueryString(paramsData)}`);
+
+export const bureauData = (paramsData: GetBureauPayload) =>
+  apiClient.get(`/bureau/getBureauById?${buildQueryString(paramsData)}`);

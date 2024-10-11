@@ -37,6 +37,10 @@ export interface GetUserPayload {
   distributorId: string;
 }
 
+export interface GetBureauPayload {
+  bureauId: string;
+}
+
 // Response Types (if needed)
 export interface AuthResponse {
   token: string;
