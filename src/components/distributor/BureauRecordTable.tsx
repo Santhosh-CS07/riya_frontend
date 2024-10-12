@@ -31,13 +31,13 @@ const BureauRecordTable: React.FC<BureauRecordTableProps> = ({ records }) => {
   };
 
   const handleShare = (bureauName: string, bureauId: string) => {
-    const formattedBureauName = bureauName.replace(/\s+/g, "-").toLowerCase();
+    const formattedBureauName = bureauName.replace(/\s+/g, "").toLowerCase();
 
     // Use the baseURL from the axios instance
-    const url = `${BASE_FRONTEND_URL}bureau-website/${formattedBureauName}/${bureauId}`;
+    const url = `${BASE_FRONTEND_URL}${formattedBureauName}.com/${bureauId}`;
 
     // WhatsApp share link format
-    const whatsappUrl = `https://wa.me/?text=Check out this bureau website: ${url}`;
+    const whatsappUrl = `https://wa.me/?text=${url}`;
 
     // Open WhatsApp share window
     window.open(whatsappUrl, "_blank");
