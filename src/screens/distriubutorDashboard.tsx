@@ -44,7 +44,7 @@ const DistributorDashboard: React.FC = () => {
       /\s+/g,
       "-"
     );
-    navigate(`/${formattedCompanyName}/${distributorProfile.distributorId}`);
+    navigate(`/d/${formattedCompanyName}/${distributorProfile.distributorId}`);
   };
 
   const handleCreateMarriageAccountClick = () => {

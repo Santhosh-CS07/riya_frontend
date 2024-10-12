@@ -2,7 +2,7 @@ import React from "react";
 import "../../App.css"; // Add your global styles
 
 const Footer = (props: any) => {
-  const { name, mobileNumber, location, email } = props;
+  const { name, mobileNumber, location, email, isBureau } = props;
   return (
     <footer className="bg-gradient-to-r from-blue-900 via-yellow-500 to-teal-600 text-white py-8">
       {/* Information, Others, Contact Section */}
@@ -16,21 +16,39 @@ const Footer = (props: any) => {
           <a href="#" className="hover:underline mb-1">
             Terms and Conditions
           </a>
-          <a href="#" className="hover:underline">
-            Back
-          </a>
         </div>
-
-        <div className="flex flex-col w-full md:w-1/3 p-2">
-          <h4 className="text-lg font-semibold mb-2">Others</h4>
-          <hr className="border-white my-2 w-14" />
-          <a href="#" className="hover:underline mb-1">
-            Registration
-          </a>
-          <a href="#" className="hover:underline mb-1">
-            Log In
-          </a>
-        </div>
+        {isBureau ? (
+          <>
+            {" "}
+            <div className="flex flex-col w-full md:w-1/3 p-2">
+              <h4 className="text-lg font-semibold mb-2">Social Media</h4>
+              <hr className="border-white my-2 w-14" />
+              <a href="#" className="hover:underline mb-1">
+                Facebook
+              </a>
+              <a href="#" className="hover:underline mb-1">
+                YouTube links
+              </a>
+              <a href="#" className="hover:underline mb-1">
+                Facebook links
+              </a>
+            </div>
+          </>
+        ) : (
+          <>
+            {" "}
+            <div className="flex flex-col w-full md:w-1/3 p-2">
+              <h4 className="text-lg font-semibold mb-2">Others</h4>
+              <hr className="border-white my-2 w-14" />
+              <a href="#" className="hover:underline mb-1">
+                Registration
+              </a>
+              <a href="#" className="hover:underline mb-1">
+                Log In
+              </a>
+            </div>
+          </>
+        )}
 
         <div className="flex flex-col w-full md:w-1/3 p-2">
           <h4 className="text-lg font-semibold mb-2">Contact</h4>
@@ -46,9 +64,15 @@ const Footer = (props: any) => {
               </>
             )}
           </p>
-          <p>Contact: 9859242242, 9063420559</p>
+          {isBureau ? (
+            <>Contact: {mobileNumber}</>
+          ) : (
+            <>
+              <p>Contact: 9859242242, 9063420559</p>
+            </>
+          )}
           <p>Email: {email ? <>{email}</> : <>madhulotmall108@gmail.com</>}</p>
-          <p>Phone: {mobileNumber ? <>{mobileNumber}</> : <>09859242242</>}</p>
+          {/* <p>Phone: {mobileNumber ? <>{mobileNumber}</> : <>09859242242</>}</p> */}
         </div>
       </div>
       <hr className="border-white my-4" />

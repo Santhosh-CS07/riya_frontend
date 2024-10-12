@@ -6,6 +6,7 @@ import {
   distributorUser,
   createImages,
   createBureauImages,
+  UsersData,
 } from "../api/endpoints/authEndPoints";
 import {
   BureauAccountRegisterPayload,
@@ -14,6 +15,7 @@ import {
   DistributorRegisterPayload,
   GetUserPayload,
   imagePayLoad,
+  UserPayload,
 } from "../api/models/authModels";
 
 export const loginDistributor = async (loginData: DistributorLoginPayload) => {
@@ -68,6 +70,15 @@ export const registerBureauAccount: any = async (
 export const getBureauUsers = async (getParms: GetUserPayload) => {
   try {
     const response = await bureauUsers(getParms);
+    return response.data; // Return token or relevant data
+  } catch (error) {
+    throw new Error("data fetch failed");
+  }
+};
+
+export const getUsersData = async (getParms: UserPayload) => {
+  try {
+    const response = await UsersData(getParms);
     return response.data; // Return token or relevant data
   } catch (error) {
     throw new Error("data fetch failed");

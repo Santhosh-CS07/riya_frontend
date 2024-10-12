@@ -26,8 +26,8 @@ const BureauRecordTable: React.FC<BureauRecordTableProps> = ({ records }) => {
   const navigate = useNavigate();
 
   const handleViewMore = (bureauName: string, bureauId: string) => {
-    const formattedBureauName = bureauName.replace(/\s+/g, "-").toLowerCase();
-    navigate(`/bureau-website/${formattedBureauName}/${bureauId}`);
+    const formattedBureauName = bureauName?.replace(/\s+/g, "").toLowerCase();
+    navigate(`/${formattedBureauName}.com/${bureauId}`);
   };
 
   const handleShare = (bureauName: string, bureauId: string) => {

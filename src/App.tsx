@@ -7,6 +7,7 @@ import DistriubutorDashboard from "./screens/distriubutorDashboard";
 import BureauAccountForm from "./components/distributor/BureauAccountForm";
 import DistributorWebsite from "./webView/distributorWebsite";
 import BureauWebsite from "./webView/bureauWebsite";
+import ViewMore from "./webView/viewMore";
 function App() {
   return (
     <>
@@ -27,13 +28,11 @@ function App() {
             element={<BureauAccountForm />}
           />
           <Route
-            path="/:companyName/:distributorId"
+            path="d/:companyName/:distributorId"
             element={<DistributorWebsite />}
           />
-          <Route
-            path="bureau-website/:bureauName/:bureauId"
-            element={<BureauWebsite />}
-          />
+          <Route path="/:bureauName/:bureauId" element={<BureauWebsite />} />
+          <Route path="/profile/:bureauName/:matriId" element={<ViewMore />} />
         </Routes>
       </BrowserRouter>
     </>

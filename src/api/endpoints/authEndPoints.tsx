@@ -7,6 +7,7 @@ import {
   GetBureauPayload,
   GetUserPayload,
   imagePayLoad,
+  UserPayload,
 } from "../models/authModels";
 
 // Utility function to build query strings
@@ -60,3 +61,6 @@ export const bureauUsers = (paramsData: GetUserPayload) =>
 
 export const bureauData = (paramsData: GetBureauPayload) =>
   apiClient.get(`/bureau/getBureauById?${buildQueryString(paramsData)}`);
+
+export const UsersData = (paramsData: UserPayload) =>
+  apiClient.get(`/user/getProfileData?${buildQueryString(paramsData)}`);

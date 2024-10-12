@@ -37,6 +37,10 @@ export interface GetUserPayload {
   distributorId: string;
 }
 
+export interface UserPayload {
+  matriId: string;
+}
+
 export interface GetBureauPayload {
   bureauId: string;
 }
