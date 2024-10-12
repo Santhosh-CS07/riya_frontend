@@ -31,7 +31,7 @@ const ImageSlider = (props: any) => {
                 src={`${
                   img.image?.startsWith("https")
                     ? img.image
-                    : `${BASE_BACKEND_URL}/${img.image}`
+                    : `${BASE_BACKEND_URL}${img.image}`
                 }`}
                 alt={`Profile ${img.position}`}
                 className="w-full object-cover rounded-lg shadow"
