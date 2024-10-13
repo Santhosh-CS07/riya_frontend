@@ -93,7 +93,7 @@ const ViewMore: React.FC = () => {
               </p>
             </div>
 
-            <div className="text-center mb-4 pb-4">
+            {/* <div className="text-center mb-4 pb-4">
               <button
                 className="py-2 px-4 border rounded inline-flex items-center"
                 onClick={openWebsite}
@@ -101,7 +101,7 @@ const ViewMore: React.FC = () => {
                 <FaGlobe className="mr-2" />
                 View All Profiles in my website
               </button>
-            </div>
+            </div> */}
           </div>
 
           <div className="bg-white shadow rounded-lg px-6 pb-6">

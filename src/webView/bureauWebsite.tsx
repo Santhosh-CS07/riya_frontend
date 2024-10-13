@@ -149,6 +149,7 @@ const BureauWebsite: React.FC = () => {
         isBureau={true}
         allPofileCount={allPofileCount}
         myPofileCount={myPofileCount}
+        bureauData_={bureauData_}
       />
 
       {/* Add padding to compensate for the navbar's height */}

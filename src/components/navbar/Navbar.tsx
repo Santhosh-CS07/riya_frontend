@@ -41,6 +41,7 @@ const Navbar = (props: any) => {
     window.open(url, "_blank");
   };
 
+  console.log("bureauData_", bureauData_);
   return (
     <>
       <nav className="fixed top-0 left-0 w-full  shadow-md z-50 text-white shadow-lg">
@@ -113,7 +114,7 @@ const Navbar = (props: any) => {
               <FaTimes size={24} />
             </li>
 
-            <div className="flex flex-col space-y-6 mt-8">
+            <div className="flex flex-col space-y-6 mt-1">
               {/* Home Link */}
               {isBureau ? (
                 <></>
