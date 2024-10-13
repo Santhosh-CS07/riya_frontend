@@ -10,6 +10,9 @@ import {
   FaHandshake,
   FaCheckCircle,
   FaHeadset,
+  FaRing,
+  FaHeart,
+  FaUsers,
 } from "react-icons/fa";
 import { motion } from "framer-motion";
 import { bureauData } from "../api/endpoints/authEndPoints";
@@ -88,6 +91,7 @@ const BureauWebsite: React.FC = () => {
   //   const formattedBureauName = bureauName?.replace(/\s+/g, "").toLowerCase();
   //   navigate(`/profile/${formattedBureauName}/${bureauId}`);
   // };
+
   return (
     <>
       {/* SEO Meta Tags */}
@@ -153,31 +157,54 @@ const BureauWebsite: React.FC = () => {
       />
 
       {/* Add padding to compensate for the navbar's height */}
-      <div className="mt-[140px]">
+      <div className="mt-[120px]">
         {/* Hero Section */}
-        <div className="relative flex flex-col items-center justify-center text-center pt-[55vh] sm:pt-[181vh] pb-4 px-6 lg:px-24 bg-gradient-to-r from-blue-50 to-white">
-          <img
-            src={`${BASE_BACKEND_URL + images[0]?.filePath}`}
-            alt="Floating decoration"
-            className="absolute bottom-0 w-full left-0 object-cover animate-float delay-300"
-          />
+        <div className="relative flex flex-col justify-between items-center text-center min-h-[55vh] sm:min-h-[70vh] pb-4 px-6 lg:px-24 bg-gradient-to-r from-pink-200 via-purple-200 to-indigo-300">
+          {images[0]?.filePath ? (
+            <>
+              <img
+                src={`${BASE_BACKEND_URL + images[0]?.filePath}`}
+                alt="Floating decoration"
+                className="absolute bottom-0 w-full left-0 object-cover animate-float delay-300"
+                style={{ maxHeight: "100vh" }} // Ensure the image doesn't exceed viewport height
+              />
+            </>
+          ) : (
+            <div className="flex items-center justify-center min-h-[35vh]">
+              <h4 className="text-2xl font-bold text-gray-800">
+                Welcome to our marriage bureau
+              </h4>
+            </div>
+          )}
 
-          <div className="mt-8 z-10 flex sm:flex-row sm:justify-center gap-4">
+          {/* Add Marriage-related Icons */}
+          {!images[0]?.filePath && (
+            <div className="flex justify-center items-center gap-4 mt-8 z-10">
+              <FaRing className="text-4xl text-pink-500" />
+              <FaHeart className="text-4xl text-red-500" />
+              <FaUsers className="text-4xl text-indigo-500" />
+            </div>
+          )}
+
+          {/* Buttons at the bottom */}
+          <div className="mt-auto bottom-0 z-10 flex sm:flex-row sm:justify-center gap-4">
+            {/* Button with Icon for "My Own Profiles" */}
             <button
               className="bg-orange-600 text-sm text-white px-3 py-1 rounded-lg shadow-md hover:bg-orange-700 transition duration-200 flex items-center gap-2"
               onClick={() => handleButtonClick("register")}
             >
-              My Own Profiles
+              <FaUsers className="text-white" /> My Own Profiles
               <span className="bg-white text-orange-600 w-10 h-10 flex items-center justify-center rounded-full font-bold">
                 {myPofileCount}+
               </span>
             </button>
 
+            {/* Button with Icon for "Other Profiles" */}
             <button
               className="bg-green-700 text-sm text-white px-3 py-1 rounded-lg shadow-md hover:bg-green-800 transition duration-200 flex items-center gap-2"
               onClick={() => handleButtonClick("login")}
             >
-              Other Profiles
+              <FaHeart className="text-white" /> Other Profiles
               <span className="bg-white text-green-700 w-10 h-10 flex items-center justify-center rounded-full font-bold">
                 {allPofileCount}+
               </span>

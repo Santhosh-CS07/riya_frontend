@@ -41,19 +41,17 @@ const Navbar = (props: any) => {
     window.open(url, "_blank");
   };
 
-  console.log("bureauData_", bureauData_);
   return (
     <>
-      <nav className="fixed top-0 left-0 w-full  shadow-md z-50 text-white shadow-lg">
-        <div className="bg-white text-center text-black flex flex-row justify-center p-3	">
+      <nav className="fixed top-0 left-0 w-full shadow-md z-50 text-white shadow-lg">
+        <div className="bg-white text-center text-black flex flex-row justify-center p-3">
           {isBureau && (
             <p className="text-2xl font-semibold text-center ml-6">
               Welcome to....
             </p>
           )}
-          {/* <div>Image</div> */}
         </div>
-        <div className="container mx-auto flex justify-between items-center p-4 bg-gradient-to-r from-blue-900 via-yellow-500 to-teal-600">
+        <div className=" flex justify-between items-center p-4 bg-gradient-to-r from-blue-900 via-yellow-500 to-teal-600">
           {/* Navbar Title */}
           <div>
             <h3 className="font-semibold cursor-pointer">{title}</h3>
@@ -101,7 +99,7 @@ const Navbar = (props: any) => {
 
           {/* Mobile Menu Items (vertical layout in side panel) */}
           <ul
-            className={`fixed top-0 right-0 w-1/2 h-screen bg-gradient-to-b from-blue-500 to-orange-500 text-white flex flex-col justify-between py-6 px-4
+            className={`fixed top-0 right-0 w-1/2 h-screen bg-gradient-to-b from-blue-500 to-orange-500 text-white flex flex-col justify-start py-4 px-4
           transition-transform transform duration-500 ease-in-out ${
             isOpen ? "translate-x-0" : "translate-x-full"
           } md:hidden`}
@@ -114,11 +112,9 @@ const Navbar = (props: any) => {
               <FaTimes size={24} />
             </li>
 
-            <div className="flex flex-col space-y-6 mt-1">
+            <div className="flex flex-col space-y-4 mt-6">
               {/* Home Link */}
-              {isBureau ? (
-                <></>
-              ) : (
+              {!isBureau && (
                 <li
                   onClick={() => {
                     if (screenType === "DISTRIBUTOR") {
@@ -136,37 +132,34 @@ const Navbar = (props: any) => {
 
               {/* Tab 3 Link */}
               {isBureau ? (
-                <>
-                  <div className="mt-8 z-10 flex flex-col sm:justify-center gap-4">
-                    <button
-                      className="bg-orange-600 text-sm text-white px-3 py-1 rounded-lg shadow-md hover:bg-orange-700 transition duration-200 flex items-center gap-2"
-                      onClick={() => handleButtonClick("register")}
-                    >
-                      My Own Profiles
-                      <span className="bg-white text-orange-600 w-10 h-10 flex items-center justify-center rounded-full font-bold">
-                        {myPofileCount}+
-                      </span>
-                    </button>
+                <div className="mt-4 flex flex-col justify-center gap-4">
+                  <button
+                    className="bg-orange-600 text-sm text-white px-3 py-1 rounded-lg shadow-md hover:bg-orange-700 transition duration-200 flex items-center gap-2"
+                    onClick={() => handleButtonClick("register")}
+                  >
+                    My Own Profiles
+                    <span className="bg-white text-orange-600 w-10 h-10 flex items-center justify-center rounded-full font-bold">
+                      {myPofileCount}+
+                    </span>
+                  </button>
 
-                    <button
-                      className="bg-green-700 text-sm text-white px-3 py-1 rounded-lg shadow-md hover:bg-green-800 transition duration-200 flex items-center gap-2"
-                      onClick={() => handleButtonClick("login")}
-                    >
-                      Other Profiles
-                      <span className="bg-white text-green-700 w-10 h-10 flex items-center justify-center rounded-full font-bold">
-                        {allPofileCount}+
-                      </span>
-                    </button>
-                  </div>
-                </>
+                  <button
+                    className="bg-green-700 text-sm text-white px-3 py-1 rounded-lg shadow-md hover:bg-green-800 transition duration-200 flex items-center gap-2"
+                    onClick={() => handleButtonClick("login")}
+                  >
+                    Other Profiles
+                    <span className="bg-white text-green-700 w-10 h-10 flex items-center justify-center rounded-full font-bold">
+                      {allPofileCount}+
+                    </span>
+                  </button>
+                </div>
               ) : (
-                <>
-                  <li className="flex items-center cursor-pointer hover:scale-105 transition-transform duration-300">
-                    <FaUserPlus className="mr-2 text-yellow-500" />
-                    <span className="text-lg font-medium">{tab3}</span>
-                  </li>
-                </>
+                <li className="flex items-center cursor-pointer hover:scale-105 transition-transform duration-300">
+                  <FaUserPlus className="mr-2 text-yellow-500" />
+                  <span className="text-lg font-medium">{tab3}</span>
+                </li>
               )}
+
               {/* Logout (Visible when distributorId exists) */}
               {distributorId && (
                 <li
@@ -181,15 +174,15 @@ const Navbar = (props: any) => {
 
             {/* Support Section */}
             {isBureau && (
-              <div className="bg-gradient-to-b from-blue-700 to-orange-500 p-4 rounded-lg">
-                <h2 className="text-2xl font-bold text-white mb-4">
+              <div className="bg-gradient-to-b from-blue-700 to-orange-500 p-4 rounded-lg mt-4">
+                <h2 className="text-2xl font-bold text-white mb-2">
                   Need Help?
                 </h2>
-                <p className="text-white mb-4 text-center">
+                <p className="text-white mb-2 text-center">
                   We’re here to help 24/7. Contact us via WhatsApp, call, or
                   email.
                 </p>
-                <div className="flex flex-col gap-4">
+                <div className="flex flex-col gap-2">
                   {/* WhatsApp Button */}
                   <a
                     href={`https://wa.me/${
